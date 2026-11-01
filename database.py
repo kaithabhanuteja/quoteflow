@@ -28,13 +28,14 @@ def init_db(app):
         except Exception as e:
             if os.getenv("VERCEL") == "1":
                 raise RuntimeError(
-                f"MySQL connection failed on Vercel: {e}") from e
+                    f"MySQL connection failed on Vercel: {e}"
+                ) from e
 
             fallback_path = BASE_DIR / "quoteflow.db"
             fallback_uri = f"sqlite:///{fallback_path}"
 
             logger.warning(
-                f"MySQL unavailable. Using local SQLite: {e}"
+                 f"MySQL unavailable. Using local SQLite: {e}"
             )
 
             app.config["SQLALCHEMY_DATABASE_URI"] = fallback_uri
