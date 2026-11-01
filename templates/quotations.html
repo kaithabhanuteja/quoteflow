@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}Quotations Dashboard - Quotflow{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-lg-5 max-w-7xl">
+
+    <!-- Top Headline & Action -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 fw-bold text-dark mb-1 tracking-tight">Quotations Management Dashboard</h1>
+            <p class="text-secondary small mb-0">
+                Track customer accounts, project scopes, quotation versions (v1, v2...), and commercial approval workflows.
+            </p>
+        </div>
+        <div>
+            <a href="/" class="btn btn-primary fw-bold px-3 py-2 shadow-xs">
+                <i class="bi bi-plus-lg me-1"></i> Create New Quotation
+            </a>
+        </div>
+    </div>
+
+    <!-- Pipeline Metric Cards (Indian Rupee formatting) -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3 col-sm-6">
+            <div class="kpi-metric-card">
+                <div class="kpi-label">Total Quotations</div>
+                <div class="kpi-value">{{ total_count }}</div>
+                <div class="small text-muted mt-1"><i class="bi bi-folder-check me-1"></i> Active client proposals</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="kpi-metric-card accent-cyan">
+                <div class="kpi-label">Total Pipeline Value</div>
+                <div class="kpi-value">{{ total_pipeline_val|inr }}</div>
+                <div class="small text-muted mt-1"><i class="bi bi-graph-up-arrow me-1"></i> Cumulative pipeline</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="kpi-metric-card accent-green">
+                <div class="kpi-label">Approved Value</div>
+                <div class="kpi-value text-success">{{ approved_val|inr }}</div>
+                <div class="small text-muted mt-1"><i class="bi bi-check2-circle me-1"></i> {{ approved_count }} signed deals</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="kpi-metric-card accent-amber">
+                <div class="kpi-label">Pending / Drafts</div>
+                <div class="kpi-value text-warning">{{ draft_count }}</div>
+                <div class="small text-muted mt-1"><i class="bi bi-hourglass-split me-1"></i> Awaiting client sign-off</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters & Search Toolbar -->
+    <div class="card card-modern p-3 mb-4">
+        <form method="GET" action="/quotations" class="row g-2 align-items-center">
+            <div class="col-md-5">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" name="search" class="form-control border-start-0" 
+                           placeholder="Search by Reference, Customer, Company, or Project..." 
+                           value="{{ search_query or '' }}">
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="">All Statuses</option>
+                    <option value="Draft" {{ 'selected' if status_filter == 'Draft' else '' }}>Draft</option>
+                    <option value="In Review" {{ 'selected' if status_filter == 'In Review' else '' }}>In Review</option>
+                    <option value="Approved" {{ 'selected' if status_filter == 'Approved' else '' }}>Approved</option>
+                    <option value="Sent" {{ 'selected' if status_filter == 'Sent' else '' }}>Sent to Client</option>
+                    <option value="Revised" {{ 'selected' if status_filter == 'Revised' else '' }}>Revised</option>
+                    <option value="Rejected" {{ 'selected' if status_filter == 'Rejected' else '' }}>Rejected</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select name="industry" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="">All Industries</option>
+                    <option value="Healthcare" {{ 'selected' if industry_filter == 'Healthcare' else '' }}>Healthcare & MedTech</option>
+                    <option value="FinTech" {{ 'selected' if industry_filter == 'FinTech' else '' }}>FinTech & Banking</option>
+                    <option value="Logistics" {{ 'selected' if industry_filter == 'Logistics' else '' }}>Logistics & Supply Chain</option>
+                    <option value="E-Commerce" {{ 'selected' if industry_filter == 'E-Commerce' else '' }}>E-Commerce & Retail</option>
+                    <option value="EdTech" {{ 'selected' if industry_filter == 'EdTech' else '' }}>EdTech & E-Learning</option>
+                    <option value="Precision" {{ 'selected' if industry_filter == 'Precision' else '' }}>Precision AgTech / Custom</option>
+                </select>
+            </div>
+
+            <div class="col-md-1 text-end">
+                <a href="/quotations" class="btn btn-sm btn-light border w-100" title="Reset Filters">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Quotations Table Card -->
+    <div class="card card-modern overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-modern align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Reference No.</th>
+                        <th>Customer & Company</th>
+                        <th>Project & Category</th>
+                        <th>Detected Industry</th>
+                        <th>Version</th>
+                        <th>Status</th>
+                        <th class="text-end">Total Investment</th>
+                        <th>Created</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if quotations %}
+                        {% for q in quotations %}
+                        <tr>
+                            <td>
+                                <a href="/quotations/{{ q.id }}" class="fw-bold text-primary font-mono text-decoration-none">
+                                    {{ q.reference_no }}
+                                </a>
+                            </td>
+                            <td>
+                                <div class="fw-semibold text-dark">{{ q.project.customer.name }}</div>
+                                <div class="small text-muted">{{ q.project.customer.company or 'N/A' }}</div>
+                            </td>
+                            <td>
+                                <div class="text-truncate fw-medium" style="max-width: 220px;" title="{{ q.project.name }}">
+                                    {{ q.project.name }}
+                                </div>
+                                <div class="small text-secondary">{{ q.project.category }}</div>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    <i class="bi bi-cpu text-primary me-1"></i>{{ q.project.industry }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary-subtle text-secondary border font-mono">
+                                    v{{ q.current_version }}
+                                </span>
+                            </td>
+                            <td>
+                                {% set status_class = 'bg-secondary' %}
+                                {% if q.status == 'Approved' %}{% set status_class = 'bg-success' %}
+                                {% elif q.status == 'In Review' %}{% set status_class = 'bg-info text-dark' %}
+                                {% elif q.status == 'Sent' %}{% set status_class = 'bg-primary' %}
+                                {% elif q.status == 'Draft' %}{% set status_class = 'bg-warning text-dark' %}
+                                {% elif q.status == 'Revised' %}{% set status_class = 'bg-dark' %}
+                                {% endif %}
+                                <div class="dropdown d-inline-block">
+                                    <button class="btn btn-sm {{ status_class }} dropdown-toggle py-0 px-2 fw-semibold" style="font-size: 0.75rem;" data-bs-toggle="dropdown">
+                                        {{ q.status }}
+                                    </button>
+                                    <ul class="dropdown-menu shadow-sm small">
+                                        <li><a class="dropdown-item" href="#" onclick="updateQuotationStatus({{ q.id }}, 'Draft')">Draft</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="updateQuotationStatus({{ q.id }}, 'In Review')">In Review</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="updateQuotationStatus({{ q.id }}, 'Approved')">Approved</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="updateQuotationStatus({{ q.id }}, 'Sent')">Sent to Client</a></li>
+                                        <li><a class="dropdown-item text-danger" href="#" onclick="updateQuotationStatus({{ q.id }}, 'Rejected')">Rejected</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td class="font-mono fw-bold text-end text-dark">
+                                {{ q.total_cost|inr }}
+                            </td>
+                            <td class="small text-muted">
+                                {{ q.created_at.strftime('%b %d, %Y') if q.created_at else 'N/A' }}
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="/quotations/{{ q.id }}" class="btn btn-light border" title="View details and revisions">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="/api/quotations/{{ q.id }}/pdf" class="btn btn-light border text-danger" title="Download Official PDF">
+                                        <i class="bi bi-file-pdf"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="9" class="text-center py-5">
+                                <i class="bi bi-folder2-open display-6 text-muted mb-3 d-block"></i>
+                                <h6 class="fw-bold text-dark">No Quotations Found</h6>
+                                <p class="text-muted small mb-3">Analyze a customer inquiry email to automatically generate your first quotation.</p>
+                                <a href="/" class="btn btn-sm btn-primary fw-semibold">
+                                    <i class="bi bi-magic me-1"></i> Create First Quotation
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

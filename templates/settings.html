@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Settings & Diagnostics - Quotflow{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-lg-5 max-w-7xl">
+
+    <div class="mb-4">
+        <h1 class="h3 fw-bold text-dark mb-1 tracking-tight">System Configuration & Diagnostics</h1>
+        <p class="text-secondary small mb-0">
+            Monitor Google Gemini API health, database engine connectivity, and company quotation defaults.
+        </p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Google Gemini API Diagnostics -->
+        <div class="col-lg-6">
+            <div class="card card-modern p-4 mb-4">
+                <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="brand-icon-box" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                            <i class="bi bi-cpu-fill"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0 text-dark">Google Gemini API</h5>
+                            <span class="small text-muted">Model: {{ gemini_model }}</span>
+                        </div>
+                    </div>
+                    {% if has_gemini_key %}
+                    <span class="badge bg-success-subtle text-success border px-3 py-1">
+                        <i class="bi bi-check-circle-fill me-1"></i> API Key Loaded
+                    </span>
+                    {% else %}
+                    <span class="badge bg-warning-subtle text-warning border px-3 py-1">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i> Heuristic Engine Active
+                    </span>
+                    {% endif %}
+                </div>
+
+                <p class="small text-secondary mb-3">
+                    Quotflow uses the <code>google-genai</code> SDK for intelligent natural language analysis,
+                    extracting requirements, isolating assumptions, detecting industries, and evaluating architectural complexity.
+                </p>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Live API Test / Custom Key:</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control font-mono" id="testApiKeyInput" 
+                               placeholder="{{ 'Configured in .env' if has_gemini_key else 'Enter Gemini API key to test' }}">
+                        <button class="btn btn-primary fw-bold" type="button" id="btnTestGemini">
+                            <i class="bi bi-broadcast me-1"></i> Test Connection
+                        </button>
+                    </div>
+                    <div class="form-text small text-muted">
+                        Calls Gemini API with a test prompt to verify credentials and endpoint latency.
+                    </div>
+                </div>
+
+                <div id="geminiTestResult" class="d-none mt-3 p-3 rounded border small"></div>
+            </div>
+
+            <!-- Database Engine Diagnostics -->
+            <div class="card card-modern p-4">
+                <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="brand-icon-box">
+                            <i class="bi bi-database-fill"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0 text-dark">Database Engine</h5>
+                            <span class="small text-muted">SQLAlchemy & MySQL / SQLite</span>
+                        </div>
+                    </div>
+                    <span class="badge bg-primary px-3 py-1">{{ db_type }}</span>
+                </div>
+
+                <div class="small text-secondary mb-3">
+                    Quotflow automatically supports MySQL for production persistence and falls back gracefully to SQLite
+                    when local MySQL is not active.
+                </div>
+
+                <ul class="list-group list-group-flush small">
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <span class="text-muted">Active Engine:</span>
+                        <span class="fw-semibold text-dark">{{ db_type }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <span class="text-muted">Connection Endpoint:</span>
+                        <span class="font-mono text-dark">{{ db_uri }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <span class="text-muted">ORM Driver:</span>
+                        <span class="fw-semibold text-dark">PyMySQL / SQLite3</span>
+                    </li>
+                </ul>
+
+                <div class="alert alert-light border small mt-3 mb-0">
+                    <i class="bi bi-info-circle text-primary me-1"></i>
+                    To switch between SQLite and MySQL, update <code>MYSQL_HOST</code>, <code>MYSQL_USER</code>, <code>MYSQL_PASSWORD</code>, and <code>MYSQL_DATABASE</code> in your <code>.env</code> file.
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Letterhead & Developer Profile -->
+        <div class="col-lg-6">
+            <div class="card card-modern p-4 mb-4">
+                <h5 class="fw-bold text-dark border-bottom pb-3 mb-3">
+                    <i class="bi bi-building me-1 text-primary"></i> Company & Developer Information
+                </h5>
+
+                <div class="row g-3 small">
+                    <div class="col-12">
+                        <label class="form-label text-muted mb-1">Company Legal Entity:</label>
+                        <div class="fw-bold text-dark fs-6">{{ company_name }}</div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-muted mb-1">Corporate Location:</label>
+                        <div class="fw-semibold text-dark"><i class="bi bi-geo-alt text-danger me-1"></i>{{ company_location }}</div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-muted mb-1">Software Engineer & Creator:</label>
+                        <div class="fw-bold text-primary fs-6"><i class="bi bi-person-fill text-primary me-1"></i>{{ developer_name }}</div>
+                        <div class="text-muted small">Lead AI Engineer & Full-Stack Developer of Quotflow</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label text-muted mb-1">Commercial Inquiries Email:</label>
+                        <div class="fw-semibold text-dark">{{ company_email }}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label text-muted mb-1">Corporate Website:</label>
+                        <div class="fw-semibold text-dark">{{ company_website }}</div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-muted mb-1">Tax / GST Registration:</label>
+                        <div class="fw-semibold text-dark font-mono">{{ company_tax_id }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Currency & Standard Defaults -->
+            <div class="card card-modern p-4">
+                <h5 class="fw-bold text-dark border-bottom pb-3 mb-3">
+                    <i class="bi bi-calculator me-1 text-primary"></i> Financial Currency & Tax Defaults
+                </h5>
+
+                <div class="row g-3 small">
+                    <div class="col-sm-4">
+                        <div class="p-3 bg-light rounded-3 border text-center">
+                            <div class="text-muted">Default Currency</div>
+                            <div class="h4 fw-bold text-success mb-0 mt-1">₹ INR</div>
+                            <div class="small text-muted mt-1">Indian Rupee format</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="p-3 bg-light rounded-3 border text-center">
+                            <div class="text-muted">Standard GST Rate</div>
+                            <div class="h4 fw-bold text-primary mb-0 mt-1">{{ default_tax }}%</div>
+                            <div class="small text-muted mt-1">Standard service GST</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="p-3 bg-light rounded-3 border text-center">
+                            <div class="text-muted">Contingency Reserve</div>
+                            <div class="h4 fw-bold text-warning mb-0 mt-1">{{ default_contingency }}%</div>
+                            <div class="small text-muted mt-1">Risk buffer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.getElementById("btnTestGemini").addEventListener("click", async function () {
+    const key = document.getElementById("testApiKeyInput").value.trim();
+    const resultBox = document.getElementById("geminiTestResult");
+    
+    resultBox.className = "mt-3 p-3 rounded border small d-block bg-light";
+    resultBox.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Testing Gemini API handshake...`;
+
+    try {
+        const resp = await fetch("/api/test-gemini", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ api_key: key })
+        });
+        const data = await resp.json();
+
+        if (data.status === "success") {
+            resultBox.className = "mt-3 p-3 rounded border small d-block alert-success text-success";
+            resultBox.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> <strong>Success:</strong> ${data.message} (Response: "${data.response}")`;
+        } else {
+            resultBox.className = "mt-3 p-3 rounded border small d-block alert-danger text-danger";
+            resultBox.innerHTML = `<i class="bi bi-x-circle-fill me-1"></i> <strong>Failed:</strong> ${data.message}`;
+        }
+    } catch (e) {
+        resultBox.className = "mt-3 p-3 rounded border small d-block alert-danger text-danger";
+        resultBox.innerHTML = `<i class="bi bi-x-circle-fill me-1"></i> <strong>Error:</strong> ${e.message}`;
+    }
+});
+</script>
+{% endblock %}

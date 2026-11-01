@@ -1,0 +1,501 @@
+/* -------------------------------------------------------------
+   Quotflow - Premium SaaS Enterprise Design System
+   Developed by Kaitha Bhanuteja for Quotflow Technologies Limited
+   ------------------------------------------------------------- */
+
+:root {
+    --brand-navy-dark: #0a0f1d;
+    --brand-navy-subtle: #111827;
+    --brand-primary: #2563eb;
+    --brand-primary-hover: #1d4ed8;
+    --brand-primary-subtle: #eff6ff;
+    --brand-primary-border: #bfdbfe;
+    
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+
+    --success-bg: #ecfdf5;
+    --success-border: #a7f3d0;
+    --success-text: #065f46;
+    
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
+    --warning-text: #92400e;
+
+    --danger-bg: #fef2f2;
+    --danger-border: #fecaca;
+    --danger-text: #991b1b;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--slate-50);
+    color: var(--slate-900);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* =============================================================
+   NAVIGATION BAR
+   ============================================================= */
+
+.bg-dark-navy {
+    background: var(--brand-navy-dark) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-icon-box {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #2563eb, #38bdf8);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.15rem;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+}
+
+.brand-title {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.brand-subtitle {
+    font-size: 0.65rem;
+    color: var(--slate-400);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+}
+
+.navbar-nav .nav-link {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--slate-300) !important;
+    padding: 0.45rem 0.85rem !important;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.navbar-nav .nav-link.active {
+    color: #ffffff !important;
+    background: rgba(37, 99, 235, 0.2);
+    font-weight: 600;
+}
+
+.nav-pill-badge {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--slate-200);
+    padding: 0.35rem 0.75rem;
+    font-size: 0.76rem;
+    font-weight: 500;
+    border-radius: 20px;
+}
+
+/* =============================================================
+   BUTTONS & CONTROLS
+   ============================================================= */
+
+.btn {
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 0.55rem 1.1rem;
+    border-radius: 8px;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(37, 99, 235, 0.2);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--brand-primary-hover);
+    border-color: var(--brand-primary-hover);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.btn-outline-primary {
+    color: var(--brand-primary);
+    border-color: var(--brand-primary-border);
+    background-color: #ffffff;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--brand-primary-subtle);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary-hover);
+}
+
+.btn-light {
+    background-color: #ffffff;
+    border-color: var(--slate-200);
+    color: var(--slate-700);
+}
+
+.btn-light:hover {
+    background-color: var(--slate-100);
+    border-color: var(--slate-300);
+    color: var(--slate-900);
+}
+
+/* =============================================================
+   CARDS & SURFACES
+   ============================================================= */
+
+.card-modern {
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card-modern:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--slate-300);
+}
+
+.card-header-clean {
+    background: transparent;
+    border-bottom: 1px solid var(--slate-200);
+    padding: 1.1rem 1.5rem;
+}
+
+/* =============================================================
+   STEP PROGRESS PIPELINE (SAAS STEPPER)
+   ============================================================= */
+
+.step-pipeline-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0.25rem 0.5rem;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--slate-500);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: default;
+    z-index: 2;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+.step-bubble {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    background: var(--slate-100);
+    color: var(--slate-500);
+    font-weight: 700;
+    border: 1px solid var(--slate-200);
+    transition: all 0.2s ease;
+}
+
+.step-item.active {
+    color: var(--brand-primary);
+}
+
+.step-item.active .step-bubble {
+    background: var(--brand-primary);
+    color: #ffffff;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 4px var(--brand-primary-border);
+}
+
+.step-item.completed {
+    color: var(--slate-800);
+}
+
+.step-item.completed .step-bubble {
+    background: #10b981;
+    color: #ffffff;
+    border-color: #10b981;
+}
+
+/* =============================================================
+   SAMPLE INQUIRY PILL BUTTONS
+   ============================================================= */
+
+.sample-pill-btn {
+    border: 1px solid var(--slate-200);
+    background: #ffffff;
+    color: var(--slate-600);
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 24px;
+    padding: 0.4rem 0.95rem;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    box-shadow: var(--shadow-xs);
+}
+
+.sample-pill-btn:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+    background: var(--brand-primary-subtle);
+}
+
+.sample-pill-btn.active {
+    background: var(--brand-primary);
+    color: #ffffff;
+    border-color: var(--brand-primary);
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+/* =============================================================
+   BADGES & PILLS
+   ============================================================= */
+
+.badge-confirmed {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid var(--success-border);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.28rem 0.65rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-assumption {
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+    border: 1px solid var(--warning-border);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.28rem 0.65rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-complexity {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+}
+
+.badge-complexity-enterprise {
+    background: #fdf2f8;
+    color: #be185d;
+    border: 1px solid #fbcfe8;
+}
+
+.badge-complexity-high {
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #ffedd5;
+}
+
+.badge-complexity-medium {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #dbeafe;
+}
+
+.badge-complexity-low {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #dcfce7;
+}
+
+/* =============================================================
+   SAAS KPI METRIC CARDS
+   ============================================================= */
+
+.kpi-metric-card {
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    padding: 1.4rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kpi-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.kpi-metric-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--brand-primary);
+}
+
+.kpi-metric-card.accent-green::before { background: #10b981; }
+.kpi-metric-card.accent-amber::before { background: #f59e0b; }
+.kpi-metric-card.accent-cyan::before { background: #06b6d4; }
+
+.kpi-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--slate-900);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+}
+
+.kpi-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate-500);
+    margin-bottom: 0.35rem;
+}
+
+/* =============================================================
+   TABLES
+   ============================================================= */
+
+.table-modern {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.table-modern thead th {
+    background: var(--slate-50);
+    color: var(--slate-500);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--slate-200);
+    padding: 0.85rem 1.1rem;
+}
+
+.table-modern tbody td {
+    padding: 0.95rem 1.1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--slate-100);
+    font-size: 0.88rem;
+    color: var(--slate-700);
+}
+
+.table-modern tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-modern tbody tr:hover td {
+    background-color: #fafbfc;
+}
+
+/* =============================================================
+   FORM INPUTS
+   ============================================================= */
+
+.form-control, .form-select {
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.88rem;
+    color: var(--slate-800);
+    box-shadow: var(--shadow-xs);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    outline: none;
+}
+
+.form-label {
+    margin-bottom: 0.4rem;
+}
+
+/* =============================================================
+   PDF VIEWER
+   ============================================================= */
+
+.pdf-preview-container {
+    width: 100%;
+    height: 820px;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    background: #3f4245;
+    box-shadow: var(--shadow-card);
+}
+
+/* =============================================================
+   CODE & MONOSPACE
+   ============================================================= */
+
+.font-mono {
+    font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+
+.footer {
+    background: #ffffff;
+    border-top: 1px solid var(--slate-200);
+    font-size: 0.82rem;
+    color: var(--slate-500);
+}

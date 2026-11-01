@@ -1,0 +1,557 @@
+{% extends "base.html" %}
+
+{% block title %}Quotflow - AI Quotation Automation Studio{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-lg-5 max-w-7xl">
+
+    <!-- Top Headline Section -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-1">
+        <div>
+            <h1 class="h3 fw-bold text-dark mb-1 tracking-tight">AI Quotation Automation Studio</h1>
+            <p class="text-secondary small mb-0">
+                Transform customer emails into structured requirements, autonomous industry classification, deterministic effort & Indian Rupee pricing, and executive PDF quotations.
+            </p>
+        </div>
+        <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+            <span class="badge bg-white text-secondary border px-3 py-2 shadow-xs fw-semibold">
+                <i class="bi bi-cpu-fill text-primary me-1"></i> Google Gemini 2.5
+            </span>
+            <span class="badge bg-white text-success border px-3 py-2 shadow-xs fw-semibold">
+                <i class="bi bi-currency-rupee me-1"></i> INR Pricing
+            </span>
+        </div>
+    </div>
+
+    <!-- Stepper Pipeline Indicator -->
+    <div class="card card-modern p-3 mb-4">
+        <div class="step-pipeline-nav">
+            <div class="step-item active" id="stepItem1">
+                <div class="step-bubble">1</div>
+                <span>Inquiry Intake</span>
+            </div>
+            <i class="bi bi-chevron-right text-muted small"></i>
+            <div class="step-item" id="stepItem2">
+                <div class="step-bubble">2</div>
+                <span>AI Classification & Scope</span>
+            </div>
+            <i class="bi bi-chevron-right text-muted small"></i>
+            <div class="step-item" id="stepItem3">
+                <div class="step-bubble">3</div>
+                <span>Effort & Cost Estimation</span>
+            </div>
+            <i class="bi bi-chevron-right text-muted small"></i>
+            <div class="step-item" id="stepItem4">
+                <div class="step-bubble">4</div>
+                <span>Executive PDF</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- STEP 1: CUSTOMER EMAIL INTAKE & INDUSTRY SAMPLES -->
+    <!-- ============================================================= -->
+    <div class="card card-modern mb-4" id="step1Section">
+        <div class="card-header card-header-clean d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary-subtle text-primary border rounded-circle p-2">
+                    <i class="bi bi-envelope-open-fill"></i>
+                </span>
+                <h5 class="fw-bold mb-0 text-dark">Step 1: Customer Inquiry Email</h5>
+            </div>
+            <span class="small text-muted">Select an industry sample or paste custom inquiry</span>
+        </div>
+        <div class="card-body p-4">
+            
+            <!-- Sample Selector Buttons -->
+            <div class="mb-4">
+                <label class="form-label small fw-bold text-muted text-uppercase mb-2">
+                    <i class="bi bi-collection me-1"></i> Select an Industry Email Sample (One-Click Intake):
+                </label>
+                <div class="d-flex flex-wrap gap-2">
+                    {% for sample in sample_emails %}
+                    <button type="button" 
+                            class="sample-pill-btn {{ 'active' if loop.first else '' }}"
+                            data-sample-id="{{ sample.id }}"
+                            data-body="{{ sample.body }}">
+                        <i class="bi bi-tag-fill me-1"></i> {{ sample.title }}
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Email Textarea -->
+            <div class="mb-4">
+                <label for="emailInput" class="form-label small fw-bold text-muted text-uppercase">
+                    Customer Email Content:
+                </label>
+                <textarea class="form-control font-mono text-dark bg-white" id="emailInput" rows="10" 
+                          placeholder="Paste customer inquiry email here..." style="font-size: 0.88rem; line-height: 1.55;"></textarea>
+            </div>
+
+            <!-- Optional Gemini API Key & Primary Action -->
+            <div class="row align-items-center g-3 pt-2">
+                <div class="col-md-6">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-light text-muted border-end-0">
+                            <i class="bi bi-key-fill text-warning me-1"></i> Gemini API Key (Optional):
+                        </span>
+                        <input type="password" class="form-control border-start-0" id="geminiApiKeyInput" 
+                               placeholder="{{ 'Configured in .env' if has_gemini_key else 'Enter custom key or leave empty for smart fallback' }}">
+                    </div>
+                    <div class="form-text small text-muted mt-1">
+                        {% if has_gemini_key %}
+                        <i class="bi bi-check-circle-fill text-success"></i> API key loaded from environment (.env).
+                        {% else %}
+                        <i class="bi bi-info-circle text-primary"></i> Leave blank to use our built-in high-fidelity NLP heuristic engine.
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-md-6 text-md-end">
+                    <button type="button" class="btn btn-primary btn-lg px-4 fw-bold" id="btnAnalyzeEmail" onclick="triggerEmailAnalysis()">
+                        <i class="bi bi-stars me-1 text-warning"></i> Analyze Email with Gemini AI
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress State Indicator -->
+            <div class="mt-4 p-3 bg-light rounded-3 border d-none" id="analysisProgress">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
+                    <div>
+                        <div class="fw-semibold text-dark small" id="analysisStatusText">Analyzing customer requirements...</div>
+                        <div class="small text-muted">Running automatic industry detection, requirement extraction, and architectural complexity evaluation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- STEP 2: AI ANALYSIS & AUTOMATIC INDUSTRY DETECTION -->
+    <!-- ============================================================= -->
+    <div class="card card-modern mb-4 d-none" id="step2Section">
+        <div class="card-header card-header-clean d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-success-subtle text-success border rounded-circle p-2">
+                    <i class="bi bi-check2-all"></i>
+                </span>
+                <h5 class="fw-bold mb-0 text-dark">Step 2: AI Analysis & Automatic Industry Detection</h5>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary-subtle text-primary border px-2 py-1" id="detectedConfidence">95% Confidence</span>
+                <span class="badge badge-complexity" id="complexityBadge">Medium Complexity</span>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            
+            <!-- Industry Classification Hero Banner -->
+            <div class="p-4 mb-4 rounded-3 border" style="background: linear-gradient(135deg, #f0fdfa 0%, #eff6ff 100%);">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-dark text-white text-uppercase px-2 py-1" style="font-size: 0.72rem;">
+                                <i class="bi bi-cpu me-1 text-cyan"></i> Automatically Identified Industry
+                            </span>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-1" id="detectedIndustryName">Healthcare & MedTech</h4>
+                        <div class="text-secondary fw-semibold small mb-2" id="detectedCategoryName">Telehealth Consultation & EHR Integration Platform</div>
+                        <div class="small text-muted" id="industryReasoning">
+                            Email heavily emphasizes clinical consultation, patient EHR access, HIPAA/HITECH regulations, and FHIR interoperability.
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                        <div class="small text-muted mb-1">Autonomous Detection:</div>
+                        <span class="badge bg-white text-success border px-3 py-2 shadow-xs fw-semibold">
+                            <i class="bi bi-check-circle-fill me-1"></i> Zero Manual Industry Selection
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer & Objectives Row -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border bg-light">
+                        <div class="card-body p-3">
+                            <h6 class="text-uppercase small fw-bold text-muted mb-2">
+                                <i class="bi bi-person-badge me-1"></i> Customer Information
+                            </h6>
+                            <div class="fw-bold text-dark" id="custName">Dr. Sarah Jenkins</div>
+                            <div class="small text-secondary" id="custRole">Chief Medical Officer</div>
+                            <div class="small fw-semibold text-primary mt-1" id="custCompany">Apex Health Group</div>
+                            <hr class="my-2 border-secondary-subtle">
+                            <div class="small text-muted"><i class="bi bi-envelope me-1"></i> <span id="custEmail">sjenkins@apexhealth.org</span></div>
+                            <div class="small text-muted"><i class="bi bi-telephone me-1"></i> <span id="custPhone">(555) 234-8901</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card h-100 border bg-light">
+                        <div class="card-body p-3">
+                            <h6 class="text-uppercase small fw-bold text-muted mb-2">
+                                <i class="bi bi-bullseye me-1"></i> Business Objectives & Expected Outcomes
+                            </h6>
+                            <p class="small text-secondary mb-2" id="businessObjectivesText">
+                                Expand remote clinical care, integrate real-time patient records with existing hospital EHR, and guarantee full HIPAA compliance.
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                <span class="small fw-bold text-muted me-1">Tech Stack:</span>
+                                <div id="techStackPills" class="d-inline-flex flex-wrap gap-1"></div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                <span class="small fw-bold text-muted me-1">Integrations:</span>
+                                <div id="integrationsPills" class="d-inline-flex flex-wrap gap-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Requirements Matrix & Clarification Questions -->
+            <div class="card border">
+                <div class="card-header bg-white border-bottom">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active fw-semibold" data-bs-toggle="tab" data-bs-target="#tabReqs">
+                                <i class="bi bi-list-check me-1"></i> Scope of Work
+                                <span class="badge bg-success ms-1" id="confirmedCountBadge">5 Confirmed</span>
+                                <span class="badge bg-warning ms-1 text-dark" id="assumptionCountBadge">2 AI Inferred</span>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link fw-semibold" data-bs-toggle="tab" data-bs-target="#tabQuestions">
+                                <i class="bi bi-patch-question me-1 text-primary"></i> Clarification Questions (Missing Info)
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body p-0">
+                    <div class="tab-content">
+                        <!-- Tab 1: Requirements Table -->
+                        <div class="tab-pane fade show active" id="tabReqs">
+                            <div class="table-responsive">
+                                <table class="table table-modern align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Status</th>
+                                            <th>Requirement & Deliverable Description</th>
+                                            <th>Category</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="requirementsTableBody">
+                                        <!-- Dynamically generated rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Clarification Questions -->
+                        <div class="tab-pane fade p-3" id="tabQuestions">
+                            <div class="alert alert-info border-info py-2 small mb-3">
+                                <i class="bi bi-info-circle-fill me-1"></i>
+                                Targeted clarification questions identifying information missing from the customer inquiry.
+                                Default baseline assumptions were used to prepare this quotation.
+                            </div>
+                            <div id="clarificationContainer">
+                                <!-- Dynamically generated questions -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- STEP 3: INTELLIGENT ESTIMATION & INTERACTIVE REVIEW -->
+    <!-- ============================================================= -->
+    <div class="card card-modern mb-4 d-none" id="step3Section">
+        <div class="card-header card-header-clean d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary-subtle text-primary border rounded-circle p-2">
+                    <i class="bi bi-calculator-fill"></i>
+                </span>
+                <h5 class="fw-bold mb-0 text-dark">Step 3: Intelligent Project Estimation & Indian Rupee (₹) Review</h5>
+            </div>
+            <div>
+                <button type="button" class="btn btn-sm btn-outline-primary fw-semibold" id="btnOpenEditor">
+                    <i class="bi bi-sliders me-1"></i> Review & Tweak Parameters
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-4">
+
+            <!-- KPI Metric Cards (Indian Rupee format) -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-3 col-sm-6">
+                    <div class="kpi-metric-card">
+                        <div class="kpi-label">Engineering Effort</div>
+                        <div class="kpi-value" id="kpiTotalHours">0 hrs</div>
+                        <div class="small text-muted mt-1"><i class="bi bi-clock-history me-1"></i> Across 7 structured phases</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="kpi-metric-card accent-cyan">
+                        <div class="kpi-label">Project Timeline</div>
+                        <div class="kpi-value" id="kpiDeliveryWeeks">0 wks</div>
+                        <div class="small text-muted mt-1"><i class="bi bi-calendar-check me-1"></i> Parallel team delivery</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="kpi-metric-card accent-amber">
+                        <div class="kpi-label">Team Allocation</div>
+                        <div class="kpi-value" id="kpiTeamSize">0</div>
+                        <div class="small text-muted mt-1"><i class="bi bi-people me-1"></i> Dedicated tech specialists</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="kpi-metric-card accent-green">
+                        <div class="kpi-label">Total Investment</div>
+                        <div class="kpi-value text-success" id="kpiGrandTotal">₹0.00</div>
+                        <div class="small text-muted mt-1"><i class="bi bi-shield-check me-1"></i> Contingency & 18% GST included</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estimation Breakdown Tabs -->
+            <div class="card border mb-3">
+                <div class="card-header bg-white border-bottom">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active fw-semibold" data-bs-toggle="tab" data-bs-target="#tabPhases">
+                                <i class="bi bi-kanban me-1"></i> Implementation Roadmap
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link fw-semibold" data-bs-toggle="tab" data-bs-target="#tabTeam">
+                                <i class="bi bi-person-lines-fill me-1"></i> Resource Plan & Rates (₹)
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link fw-semibold" data-bs-toggle="tab" data-bs-target="#tabFinancials">
+                                <i class="bi bi-cash-stack me-1"></i> Detailed Cost Breakdown (₹)
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link fw-semibold" data-bs-toggle="tab" data-bs-target="#tabMilestones">
+                                <i class="bi bi-flag-fill me-1 text-primary"></i> Payment Milestones (₹)
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body p-0">
+                    <div class="tab-content">
+                        <!-- Phases Tab -->
+                        <div class="tab-pane fade show active" id="tabPhases">
+                            <div class="table-responsive">
+                                <table class="table table-modern align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Phase & Name</th>
+                                            <th>Effort</th>
+                                            <th>Duration</th>
+                                            <th>Key Deliverables</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="phasesTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Team Tab -->
+                        <div class="tab-pane fade" id="tabTeam">
+                            <div class="table-responsive">
+                                <table class="table table-modern align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Role & Expertise</th>
+                                            <th>Seniority</th>
+                                            <th class="text-center">Staff</th>
+                                            <th>Allocated Hours</th>
+                                            <th>Hourly Rate (₹)</th>
+                                            <th>Subtotal (₹)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="teamTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Financials Tab -->
+                        <div class="tab-pane fade p-3" id="tabFinancials">
+                            <div class="table-responsive">
+                                <table class="table table-modern align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Cost Component</th>
+                                            <th>Scope Description</th>
+                                            <th class="text-end">Subtotal (₹ INR)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="financialLedgerBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Milestones Tab -->
+                        <div class="tab-pane fade" id="tabMilestones">
+                            <div class="table-responsive">
+                                <table class="table table-modern align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Milestone</th>
+                                            <th>Completion Trigger</th>
+                                            <th class="text-center">Allocation</th>
+                                            <th class="text-end">Amount (₹ INR)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="milestonesTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Methodology Explainability Note -->
+            <div class="p-3 bg-light rounded-3 border mb-4">
+                <div class="d-flex align-items-start gap-2">
+                    <i class="bi bi-lightbulb-fill text-warning fs-5"></i>
+                    <div>
+                        <div class="fw-bold small text-dark">Estimation Methodology & Transparency Note:</div>
+                        <div class="small text-secondary" id="methodologyText"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom CTA Row -->
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="small text-muted">
+                    <i class="bi bi-check-circle text-success me-1"></i> Estimates verified and ready for official PDF generation.
+                </div>
+                <button type="button" class="btn btn-success btn-lg px-4 fw-bold shadow-xs" id="btnGenerateQuotation" onclick="generateFinalQuotation()">
+                    <i class="bi bi-file-earmark-pdf-fill me-1"></i> Save & Generate Executive PDF Quotation
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- STEP 4: FINAL QUOTATION GENERATED & EXECUTIVE PDF PREVIEW -->
+    <!-- ============================================================= -->
+    <div class="card card-modern mb-4 border-success d-none" id="step4Section">
+        <div class="card-header bg-success text-white py-3 d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-check-circle-fill fs-5"></i>
+                <h5 class="fw-bold mb-0">Quotation Finalized & Professional PDF Generated</h5>
+            </div>
+            <span class="badge bg-white text-success fw-bold px-3 py-2 font-mono" id="successRefNo">QF-2026-MED-0000</span>
+        </div>
+        <div class="card-body p-4">
+            
+            <div class="row align-items-center mb-4 g-3">
+                <div class="col-md-7">
+                    <h5 class="fw-bold text-dark mb-1">Your Executive Quotation Document is Ready!</h5>
+                    <p class="text-muted small mb-0">
+                        Persisted in database with version tracking (v1). Includes Quotflow letterhead, automatic industry compliance deliverables, confirmed scope matrix, detailed financial ledger with Indian Rupee pricing, and authorized signature.
+                    </p>
+                    <div class="h4 fw-extrabold text-success mt-2 mb-0" id="successGrandTotal">₹0.00 INR</div>
+                </div>
+                <div class="col-md-5 text-md-end d-flex flex-wrap justify-content-md-end gap-2">
+                    <a href="#" class="btn btn-primary fw-bold px-3 py-2 shadow-xs" id="btnDownloadPdf" download>
+                        <i class="bi bi-download me-1"></i> Download PDF
+                    </a>
+                    <a href="#" class="btn btn-outline-dark fw-semibold px-3 py-2" id="btnViewQuoteDetail">
+                        <i class="bi bi-folder2-open me-1"></i> View in Quotation History
+                    </a>
+                    <a href="/" class="btn btn-light border fw-semibold px-3 py-2">
+                        <i class="bi bi-plus-lg me-1"></i> Create Another
+                    </a>
+                </div>
+            </div>
+
+            <!-- PDF Preview Frame -->
+            <div class="card border overflow-hidden">
+                <div class="card-header bg-light py-2 px-3 d-flex justify-content-between align-items-center small">
+                    <span class="fw-semibold text-muted"><i class="bi bi-file-pdf-fill text-danger me-1"></i> Document Live Preview</span>
+                    <span class="text-muted">ReportLab Platypus Engine • Page X of Y Numbered • Authorized Signatory: Kaitha Bhanuteja</span>
+                </div>
+                <div class="p-0">
+                    <iframe id="pdfPreviewIframe" class="pdf-preview-container" src=""></iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ============================================================= -->
+<!-- MODAL: INTERACTIVE ESTIMATION EDITOR / OVERRIDES -->
+<!-- ============================================================= -->
+<div class="modal fade" id="editEstimatesModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold"><i class="bi bi-sliders me-2 text-primary"></i> Review & Edit Quotation Parameters</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="alert alert-light border small text-muted mb-4">
+                    Adjust rates, contingency reserves, and tax percentages. The system will mathematically recompute all phase costs, totals, and payment milestones in Indian Rupees (₹).
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Senior Full-Stack Rate (₹/hr):</label>
+                        <input type="number" class="form-control" id="editSrDevRate" value="95.0">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">QA Automation Rate (₹/hr):</label>
+                        <input type="number" class="form-control" id="editQaRate" value="70.0">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Solution Architect Rate (₹/hr):</label>
+                        <input type="number" class="form-control" id="editArchRate" value="125.0">
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Contingency Reserve (%):</label>
+                        <input type="number" class="form-control" id="editContingencyInput" value="10" min="0" max="30">
+                        <div class="form-text small">Standard is 10% - 15%</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Applicable GST / Tax (%):</label>
+                        <input type="number" class="form-control" id="editTaxInput" value="18" min="0" max="30">
+                        <div class="form-text small">Default is 18% standard GST</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Commercial Courtesy Discount (₹):</label>
+                        <input type="number" class="form-control" id="editDiscountInput" value="0.0" min="0">
+                        <div class="form-text small">Concession discount amount</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary fw-bold" id="btnApplyOverrides">
+                    <i class="bi bi-arrow-repeat me-1"></i> Apply & Recalculate Estimates
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}
