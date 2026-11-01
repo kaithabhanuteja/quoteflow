@@ -25,8 +25,23 @@ class Config:
     DATABASE_URL = os.getenv("DATABASE_URL")
     
     # PDF and Upload Storage
-    STORAGE_DIR = BASE_DIR / "static" / "generated_pdfs"
+    # This below two file are causing error while deploying so we ae changing this a vecel acceptable type of code
+    # STORAGE_DIR = BASE_DIR / "static" / "generated_pdfs"
+    # STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+    IS_VERCEL = os.getenv("VERCEL") == "1"
+
+    if IS_VERCEL:
+        STORAGE_DIR = Path("/tmp/generated_pdfs")
+    else:
+        STORAGE_DIR = BASE_DIR / "static" / "generated_pdfs"
+
     STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+
+
+
+
+
+
     
     # Company Profile for Quotations
     COMPANY_NAME = os.getenv("COMPANY_NAME", "Quotflow Technologies Limited")
