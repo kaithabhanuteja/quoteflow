@@ -18,14 +18,14 @@
 </head>
 <body>
     <!-- Top Enterprise Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-navy sticky-top py-2 px-3 shadow-xs">
-        <div class="container-fluid px-lg-4">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-navy sticky-top py-3 px-4 shadow-soft">
+        <div class="container-fluid px-lg-5">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="/">
                 <div class="brand-icon-box">
                     <i class="bi bi-cpu-fill"></i>
                 </div>
                 <div class="d-flex flex-column">
-                    <span class="brand-title">Quotflow<span class="text-primary-emphasis" style="color: #60a5fa !important;">.ai</span></span>
+                    <span class="brand-title">Quotflow<span class="text-primary-emphasis" style="color: #a78bfa !important;">.ai</span></span>
                     <span class="brand-subtitle">Quotation Management SaaS</span>
                 </div>
             </a>
@@ -35,39 +35,39 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-1">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-5 gap-2">
                     <li class="nav-item">
                         <a class="nav-link {{ 'active' if request.path == '/' else '' }}" href="/">
-                            <i class="bi bi-magic me-1"></i> New Quotation
+                            <i class="bi bi-magic me-2"></i> New Quotation
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ 'active' if request.path.startswith('/quotations') else '' }}" href="/quotations">
-                            <i class="bi bi-file-earmark-spreadsheet me-1"></i> Quotations Dashboard
+                            <i class="bi bi-file-earmark-spreadsheet me-2"></i> Quotations Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ 'active' if request.path == '/settings' else '' }}" href="/settings">
-                            <i class="bi bi-sliders me-1"></i> Settings & Diagnostics
+                            <i class="bi bi-sliders me-2"></i> Settings & Diagnostics
                         </a>
                     </li>
                 </ul>
 
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-3">
                     <!-- Indian Rupee Currency Indicator -->
                     <span class="nav-pill-badge" title="Currency: Indian Rupee (INR)">
-                        <i class="bi bi-currency-rupee text-warning me-1"></i>
+                        <i class="bi bi-currency-rupee text-warning me-2"></i>
                         <span>INR (₹)</span>
                     </span>
 
                     <!-- Database Engine Status Badge -->
                     <span class="nav-pill-badge" title="Active Persistence Layer">
-                        <i class="bi bi-database-check text-success me-1"></i>
+                        <i class="bi bi-database-check text-success me-2"></i>
                         <span>{{ db_type or 'MySQL / SQLite' }}</span>
                     </span>
 
                     <!-- Quick Action -->
-                    <a href="/" class="btn btn-sm btn-primary d-flex align-items-center gap-1 ms-2">
+                    <a href="/" class="btn btn-sm btn-primary d-flex align-items-center gap-2 ms-3">
                         <i class="bi bi-plus-lg"></i> Create Quote
                     </a>
                 </div>
@@ -76,21 +76,31 @@
     </nav>
 
     <!-- Main Workspace Container -->
-    <main class="py-4 flex-grow-1">
+    <main class="py-5 flex-grow-1">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Modern SaaS Footer -->
-    <footer class="footer py-3 border-top mt-auto">
-        <div class="container-fluid px-lg-4 d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <div>
-                <strong>Quotflow Technologies Limited</strong> • Madhapur, HITEC City, Hyderabad, Telangana, India
-                <span class="text-muted ms-2">| Developed by <strong class="text-dark">{{ developer_name }}</strong></span>
-            </div>
-            <div class="d-flex align-items-center gap-3 text-muted small">
-                <span><i class="bi bi-shield-check text-success me-1"></i> Enterprise Ready</span>
-                <span><i class="bi bi-currency-rupee text-warning me-1"></i> Indian Rupee (₹)</span>
-                <span><i class="bi bi-file-pdf text-danger me-1"></i> ReportLab Platypus</span>
+    <footer class="footer border-top mt-auto">
+        <div class="container-fluid px-lg-5">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="d-flex flex-wrap align-items-center gap-3">
+                        <strong class="text-dark">Quotflow Technologies Limited</strong>
+                        <span class="text-muted">•</span>
+                        <span class="text-muted">Madhapur, HITEC City, Hyderabad, Telangana, India</span>
+                    </div>
+                    <div class="text-muted small mt-2">
+                        Developed by <strong class="text-dark">{{ developer_name }}</strong>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-flex align-items-center justify-content-md-end gap-4 text-muted small">
+                        <span><i class="bi bi-shield-check text-success me-2"></i> Enterprise Ready</span>
+                        <span><i class="bi bi-currency-rupee text-warning me-2"></i> Indian Rupee (₹)</span>
+                        <span><i class="bi bi-file-pdf text-danger me-2"></i> ReportLab Platypus</span>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>

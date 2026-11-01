@@ -6,57 +6,57 @@
 <div class="container-fluid px-lg-5 max-w-7xl">
 
     <!-- Top Headline & Action -->
-    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-        <div>
-            <h1 class="h3 fw-bold text-dark mb-1 tracking-tight">Quotations Management Dashboard</h1>
-            <p class="text-secondary small mb-0">
+    <div class="d-flex flex-wrap justify-content-between align-items-start mb-5">
+        <div class="flex-grow-1">
+            <h1 class="h2 fw-bold text-dark mb-2 tracking-tight">Quotations Management Dashboard</h1>
+            <p class="text-secondary mb-0" style="font-size: 0.95rem; line-height: 1.6;">
                 Track customer accounts, project scopes, quotation versions (v1, v2...), and commercial approval workflows.
             </p>
         </div>
-        <div>
-            <a href="/" class="btn btn-primary fw-bold px-3 py-2 shadow-xs">
-                <i class="bi bi-plus-lg me-1"></i> Create New Quotation
+        <div class="mt-3 mt-md-0">
+            <a href="/" class="btn btn-primary fw-bold px-4 py-2 shadow-soft">
+                <i class="bi bi-plus-lg me-2"></i> Create New Quotation
             </a>
         </div>
     </div>
 
     <!-- Pipeline Metric Cards (Indian Rupee formatting) -->
-    <div class="row g-3 mb-4">
+    <div class="row g-4 mb-5">
         <div class="col-md-3 col-sm-6">
             <div class="kpi-metric-card">
                 <div class="kpi-label">Total Quotations</div>
                 <div class="kpi-value">{{ total_count }}</div>
-                <div class="small text-muted mt-1"><i class="bi bi-folder-check me-1"></i> Active client proposals</div>
+                <div class="text-muted mt-2"><i class="bi bi-folder-check me-2"></i> Active client proposals</div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="kpi-metric-card accent-cyan">
                 <div class="kpi-label">Total Pipeline Value</div>
                 <div class="kpi-value">{{ total_pipeline_val|inr }}</div>
-                <div class="small text-muted mt-1"><i class="bi bi-graph-up-arrow me-1"></i> Cumulative pipeline</div>
+                <div class="text-muted mt-2"><i class="bi bi-graph-up-arrow me-2"></i> Cumulative pipeline</div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="kpi-metric-card accent-green">
                 <div class="kpi-label">Approved Value</div>
                 <div class="kpi-value text-success">{{ approved_val|inr }}</div>
-                <div class="small text-muted mt-1"><i class="bi bi-check2-circle me-1"></i> {{ approved_count }} signed deals</div>
+                <div class="text-muted mt-2"><i class="bi bi-check2-circle me-2"></i> {{ approved_count }} signed deals</div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="kpi-metric-card accent-amber">
                 <div class="kpi-label">Pending / Drafts</div>
                 <div class="kpi-value text-warning">{{ draft_count }}</div>
-                <div class="small text-muted mt-1"><i class="bi bi-hourglass-split me-1"></i> Awaiting client sign-off</div>
+                <div class="text-muted mt-2"><i class="bi bi-hourglass-split me-2"></i> Awaiting client sign-off</div>
             </div>
         </div>
     </div>
 
     <!-- Filters & Search Toolbar -->
-    <div class="card card-modern p-3 mb-4">
-        <form method="GET" action="/quotations" class="row g-2 align-items-center">
+    <div class="card card-modern p-4 mb-5">
+        <form method="GET" action="/quotations" class="row g-3 align-items-center">
             <div class="col-md-5">
-                <div class="input-group input-group-sm">
+                <div class="input-group">
                     <span class="input-group-text bg-light text-muted border-end-0">
                         <i class="bi bi-search"></i>
                     </span>
@@ -67,7 +67,7 @@
             </div>
 
             <div class="col-md-3">
-                <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                <select name="status" class="form-select" onchange="this.form.submit()">
                     <option value="">All Statuses</option>
                     <option value="Draft" {{ 'selected' if status_filter == 'Draft' else '' }}>Draft</option>
                     <option value="In Review" {{ 'selected' if status_filter == 'In Review' else '' }}>In Review</option>
@@ -79,7 +79,7 @@
             </div>
 
             <div class="col-md-3">
-                <select name="industry" class="form-select form-select-sm" onchange="this.form.submit()">
+                <select name="industry" class="form-select" onchange="this.form.submit()">
                     <option value="">All Industries</option>
                     <option value="Healthcare" {{ 'selected' if industry_filter == 'Healthcare' else '' }}>Healthcare & MedTech</option>
                     <option value="FinTech" {{ 'selected' if industry_filter == 'FinTech' else '' }}>FinTech & Banking</option>
@@ -91,7 +91,7 @@
             </div>
 
             <div class="col-md-1 text-end">
-                <a href="/quotations" class="btn btn-sm btn-light border w-100" title="Reset Filters">
+                <a href="/quotations" class="btn btn-light border w-100" title="Reset Filters">
                     <i class="bi bi-arrow-counterclockwise"></i>
                 </a>
             </div>
