@@ -75,6 +75,12 @@ def generate_reference_number(industry_name: str) -> str:
 # -------------------------------------------------------------
 
 @app.route("/")
+def landing():
+    """Landing page - Professional SaaS homepage."""
+    return render_template("landing.html")
+
+
+@app.route("/studio")
 def index():
     """Main Quotation Creation & AI Automation Studio."""
     return render_template(

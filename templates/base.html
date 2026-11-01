@@ -37,18 +37,23 @@
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-5 gap-2">
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path == '/' else '' }}" href="/">
-                            <i class="bi bi-magic me-2"></i> New Quotation
+                        <a class="nav-link" href="/">
+                            <i class="bi bi-house me-1"></i> Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path.startswith('/quotations') else '' }}" href="/quotations">
-                            <i class="bi bi-file-earmark-spreadsheet me-2"></i> Quotations Dashboard
+                        <a class="nav-link active" href="/studio">
+                            <i class="bi bi-plus-circle me-1"></i> New Quotation
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path == '/settings' else '' }}" href="/settings">
-                            <i class="bi bi-sliders me-2"></i> Settings & Diagnostics
+                        <a class="nav-link" href="/quotations">
+                            <i class="bi bi-grid-1x2 me-1"></i> Quotations Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/settings">
+                            <i class="bi bi-gear me-1"></i> Settings & Diagnostics
                         </a>
                     </li>
                 </ul>

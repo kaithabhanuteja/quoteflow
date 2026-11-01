@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotflow - AI-Powered Quotation Management Software</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<!-- Landing Navbar -->
+<nav class="landing-navbar navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-3" href="/">
+            <div class="brand-icon-box">
+                <i class="bi bi-cpu-fill"></i>
+            </div>
+            <div class="d-flex flex-column">
+                <span class="brand-title">Quotflow<span class="text-primary-emphasis" style="color: #a78bfa !important;">.ai</span></span>
+                <span class="brand-subtitle">Quotation Management SaaS</span>
+            </div>
+        </a>
+        
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLanding">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarLanding">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-5 gap-2">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#features">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#industries">Industries</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#pricing">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#testimonials">Testimonials</a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="/studio" class="btn btn-outline-light px-4 py-2 fw-semibold">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                </a>
+                <a href="/studio" class="btn btn-primary px-4 py-2 fw-bold shadow-glow">
+                    <i class="bi bi-rocket-takeoff me-2"></i>Get Started
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section" id="hero">
+    <div class="container">
+        <div class="row align-items-center min-vh-100 pt-5">
+            <div class="col-lg-6 hero-content">
+                <div class="hero-badge mb-4">
+                    <span class="badge bg-gradient-primary text-white px-4 py-2">
+                        <i class="bi bi-stars me-2"></i>AI-Powered Quotation Platform
+                    </span>
+                </div>
+                <h1 class="hero-title mb-4">
+                    Create Professional Quotations in <span class="text-gradient">Minutes</span>, Not Hours
+                </h1>
+                <p class="hero-subtitle mb-5">
+                    Transform customer emails into structured, accurate quotations using advanced AI. 
+                    Auto-detect industries, calculate precise estimates, and generate executive PDFs instantly.
+                </p>
+                <div class="hero-buttons d-flex gap-3 flex-wrap">
+                    <a href="/studio" class="btn btn-primary btn-lg px-5 py-3 fw-bold shadow-glow">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Get Started Free
+                    </a>
+                    <a href="/quotations" class="btn btn-outline-light btn-lg px-5 py-3 fw-bold">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Login to Dashboard
+                    </a>
+                </div>
+                <div class="hero-stats mt-5">
+                    <div class="row g-4">
+                        <div class="col-4">
+                            <div class="stat-item">
+                                <div class="stat-value">10K+</div>
+                                <div class="stat-label">Quotations Generated</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item">
+                                <div class="stat-value">95%</div>
+                                <div class="stat-label">AI Accuracy Rate</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-item">
+                                <div class="stat-value">50+</div>
+                                <div class="stat-label">Industries Supported</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 hero-visual">
+                <div class="hero-card-wrapper">
+                    <div class="hero-card hero-card-1">
+                        <div class="card-icon">
+                            <i class="bi bi-envelope-open-fill"></i>
+                        </div>
+                        <div class="card-text">
+                            <strong>Email Intake</strong>
+                            <span>Paste customer inquiry</span>
+                        </div>
+                    </div>
+                    <div class="hero-card hero-card-2">
+                        <div class="card-icon">
+                            <i class="bi bi-cpu-fill"></i>
+                        </div>
+                        <div class="card-text">
+                            <strong>AI Analysis</strong>
+                            <span>Auto-detect industry</span>
+                        </div>
+                    </div>
+                    <div class="hero-card hero-card-3">
+                        <div class="card-icon">
+                            <i class="bi bi-calculator-fill"></i>
+                        </div>
+                        <div class="card-text">
+                            <strong>Smart Estimation</strong>
+                            <span>Precise cost calculation</span>
+                        </div>
+                    </div>
+                    <div class="hero-card hero-card-4">
+                        <div class="card-icon">
+                            <i class="bi bi-file-earmark-pdf-fill"></i>
+                        </div>
+                        <div class="card-text">
+                            <strong>PDF Generation</strong>
+                            <span>Executive quotation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5" id="features">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <span class="badge bg-gradient-secondary mb-3">Powerful Features</span>
+            <h2 class="section-title mb-3">Everything You Need to Win More Business</h2>
+            <p class="section-subtitle">Streamline your quotation workflow with intelligent automation</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-robot"></i>
+                    </div>
+                    <h4 class="feature-title">AI-Powered Analysis</h4>
+                    <p class="feature-desc">
+                        Automatically extract requirements, detect industries, and analyze complexity from customer emails using Google Gemini AI.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-diagram-3"></i>
+                    </div>
+                    <h4 class="feature-title">Industry Intelligence</h4>
+                    <p class="feature-desc">
+                        Support for 50+ industries including Healthcare, FinTech, E-Commerce, Logistics, EdTech, and more with specialized rate cards.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-currency-rupee"></i>
+                    </div>
+                    <h4 class="feature-title">INR Pricing Engine</h4>
+                    <p class="feature-desc">
+                        Built-in Indian Rupee pricing with GST calculations, contingency buffers, and customizable rate cards for accurate estimates.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-file-earmark-pdf"></i>
+                    </div>
+                    <h4 class="feature-title">Professional PDFs</h4>
+                    <p class="feature-desc">
+                        Generate executive-grade PDF quotations with your branding, detailed breakdowns, and professional formatting instantly.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-git"></i>
+                    </div>
+                    <h4 class="feature-title">Version Control</h4>
+                    <p class="feature-desc">
+                        Track quotation versions (v1, v2, v3...) with complete audit trails, revision notes, and comparison capabilities.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <h4 class="feature-title">Pipeline Analytics</h4>
+                    <p class="feature-desc">
+                        Track your quotation pipeline, approval rates, total value, and conversion metrics with real-time dashboard analytics.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="benefits-section py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="benefits-visual">
+                    <div class="benefit-chart">
+                        <div class="chart-bar" style="height: 60%; animation-delay: 0s;"></div>
+                        <div class="chart-bar" style="height: 80%; animation-delay: 0.2s;"></div>
+                        <div class="chart-bar" style="height: 45%; animation-delay: 0.4s;"></div>
+                        <div class="chart-bar" style="height: 90%; animation-delay: 0.6s;"></div>
+                        <div class="chart-bar" style="height: 70%; animation-delay: 0.8s;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <span class="badge bg-gradient-success mb-3">Why Choose Quotflow</span>
+                <h2 class="section-title mb-4">Save Time, Close More Deals</h2>
+                <div class="benefit-item">
+                    <div class="benefit-number">01</div>
+                    <div class="benefit-content">
+                        <h4 class="benefit-title">Reduce Quotation Time by 80%</h4>
+                        <p class="benefit-desc">What used to take hours now takes minutes with AI-powered automation and intelligent templates.</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-number">02</div>
+                    <div class="benefit-content">
+                        <h4 class="benefit-title">Improve Accuracy & Consistency</h4>
+                        <p class="benefit-desc">Eliminate manual errors with standardized rate cards and automated calculations across all quotations.</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-number">03</div>
+                    <div class="benefit-content">
+                        <h4 class="benefit-title">Better Client Communication</h4>
+                        <p class="benefit-desc">Professional PDFs with clear breakdowns help clients understand value and accelerate approval decisions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Industries Section -->
+<section class="industries-section py-5" id="industries">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <span class="badge bg-gradient-info mb-3">Industry Solutions</span>
+            <h2 class="section-title mb-3">Built for Every Industry</h2>
+            <p class="section-subtitle">Specialized rate cards and industry-specific intelligence</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="industry-card">
+                    <div class="industry-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i class="bi bi-heart-pulse"></i>
+                    </div>
+                    <h5 class="industry-name">Healthcare</h5>
+                    <p class="industry-desc">MedTech, Telehealth, EHR Integration</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="industry-card">
+                    <div class="industry-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+                        <i class="bi bi-bank"></i>
+                    </div>
+                    <h5 class="industry-name">FinTech</h5>
+                    <p class="industry-desc">Banking, Payments, Trading Platforms</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="industry-card">
+                    <div class="industry-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <h5 class="industry-name">Logistics</h5>
+                    <p class="industry-desc">Supply Chain, Fleet Management</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="industry-card">
+                    <div class="industry-icon" style="background: linear-gradient(135deg, #ec4899, #be185d);">
+                        <i class="bi bi-cart3"></i>
+                    </div>
+                    <h5 class="industry-name">E-Commerce</h5>
+                    <p class="industry-desc">Retail, Marketplaces, D2C</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="industry-card">
+                    <div class="industry-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                        <i class="bi bi-book"></i>
+                    </div>
+                    <h5 class="industry-name">EdTech</h5>
+                    <p class="industry-desc">E-Learning, LMS, Education</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="industry-card">
+                    <div class="industry-icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <h5 class="industry-name">Real Estate</h5>
+                    <p class="industry-desc">PropTech, Property Management</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="industry-card">
+                    <div class="industry-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h5 class="industry-name">Cybersecurity</h5>
+                    <p class="industry-desc">Security, Compliance, Audit</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="industry-card">
+                    <div class="industry-icon" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">
+                        <i class="bi bi-grid-3x3"></i>
+                    </div>
+                    <h5 class="industry-name">SaaS</h5>
+                    <p class="industry-desc">Cloud, Software, Platforms</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section py-5" id="testimonials">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <span class="badge bg-gradient-warning mb-3">Testimonials</span>
+            <h2 class="section-title mb-3">Trusted by Growing Businesses</h2>
+            <p class="section-subtitle">See what our customers have to say</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Quotflow has transformed how we handle quotations. What used to take 2 hours now takes 15 minutes. The AI accuracy is incredible!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RK</div>
+                        <div class="author-info">
+                            <strong>Rahul Kumar</strong>
+                            <span>CTO, TechStart India</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "The industry-specific rate cards are a game-changer. Our quotations are now more accurate and we've closed 40% more deals since using Quotflow."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PS</div>
+                        <div class="author-info">
+                            <strong>Priya Sharma</strong>
+                            <span>Founder, MedCare Solutions</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Version control and audit trails have made our quotation process completely transparent. Clients love the professional PDFs we generate."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AV</div>
+                        <div class="author-info">
+                            <strong>Amit Verma</strong>
+                            <span>Director, BuildTech Corp</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing-section py-5" id="pricing">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <span class="badge bg-gradient-primary mb-3">Simple Pricing</span>
+            <h2 class="section-title mb-3">Start Free, Scale as You Grow</h2>
+            <p class="section-subtitle">No hidden fees, cancel anytime</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card pricing-free">
+                    <div class="pricing-badge">Free Forever</div>
+                    <h3 class="pricing-title">Starter</h3>
+                    <div class="pricing-price">
+                        <span class="price-amount">₹0</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> 10 Quotations/month</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Basic AI Analysis</li>
+                        <li><i class="bi bi-check-circle-fill"></i> PDF Generation</li>
+                        <li><i class="bi bi-check-circle-fill"></i> 5 Industries</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Email Support</li>
+                    </ul>
+                    <a href="/studio" class="btn btn-outline-primary w-100 py-3 fw-bold">Get Started</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card pricing-pro">
+                    <div class="pricing-badge popular">Most Popular</div>
+                    <h3 class="pricing-title">Professional</h3>
+                    <div class="pricing-price">
+                        <span class="price-amount">₹999</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> Unlimited Quotations</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Advanced AI with Gemini</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Custom Branding</li>
+                        <li><i class="bi bi-check-circle-fill"></i> 50+ Industries</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Priority Support</li>
+                        <li><i class="bi bi-check-circle-fill"></i> API Access</li>
+                    </ul>
+                    <a href="/studio" class="btn btn-primary w-100 py-3 fw-bold shadow-glow">Start Free Trial</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card pricing-enterprise">
+                    <div class="pricing-badge">Enterprise</div>
+                    <h3 class="pricing-title">Business</h3>
+                    <div class="pricing-price">
+                        <span class="price-amount">₹2,999</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> Everything in Pro</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Team Collaboration</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Custom Rate Cards</li>
+                        <li><i class="bi bi-check-circle-fill"></i> White-label Solution</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Dedicated Account Manager</li>
+                        <li><i class="bi bi-check-circle-fill"></i> SLA Guarantee</li>
+                    </ul>
+                    <a href="/studio" class="btn btn-outline-primary w-100 py-3 fw-bold">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container py-5">
+        <div class="cta-card">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="cta-title mb-3">Ready to Transform Your Quotation Process?</h2>
+                    <p class="cta-subtitle">Join thousands of businesses already using Quotflow to close more deals, faster.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                    <a href="/studio" class="btn btn-primary btn-lg px-5 py-3 fw-bold shadow-glow">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Start Free Today
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="landing-footer">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="footer-brand">
+                    <div class="brand-icon-box mb-3">
+                        <i class="bi bi-cpu-fill"></i>
+                    </div>
+                    <h4 class="footer-title">Quotflow.ai</h4>
+                    <p class="footer-desc">AI-powered quotation management software for modern businesses.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <h5 class="footer-heading">Product</h5>
+                <ul class="footer-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#industries">Industries</a></li>
+                    <li><a href="/studio">Get Started</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <h5 class="footer-heading">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <h5 class="footer-heading">Support</h5>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">API Reference</a></li>
+                    <li><a href="#">Status</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2">
+                <h5 class="footer-heading">Legal</h5>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">GDPR</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="footer-divider my-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="footer-copyright">&copy; 2026 Quotflow Technologies Limited. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <p class="footer-made">Made with <i class="bi bi-heart-fill text-danger"></i> in India</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Navbar scroll effect
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.landing-navbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+</script>
+</body>
+</html>
+
+<style>
+/* Landing Page Styles */
+.landing-navbar {
+    background: rgba(30, 27, 75, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.landing-navbar.scrolled {
+    background: rgba(30, 27, 75, 0.98);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.landing-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500;
+    padding: 0.6rem 1rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.landing-navbar .nav-link:hover,
+.landing-navbar .nav-link.active {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+    min-height: 100vh;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%);
+    animation: hero-glow 8s ease-in-out infinite;
+}
+
+@keyframes hero-glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+.hero-badge .badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 0.6rem 1.5rem;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #a78bfa, #c4b5fd, #ddd6fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    opacity: 0.9;
+    max-width: 600px;
+}
+
+.hero-buttons .btn {
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.hero-buttons .btn-primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.hero-buttons .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.5);
+}
+
+.hero-buttons .btn-outline-light {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.hero-buttons .btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-stats {
+    margin-top: 3rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a78bfa, #c4b5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 0.5rem;
+}
+
+.hero-visual {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-card-wrapper {
+    position: relative;
+    height: 500px;
+}
+
+.hero-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    animation: float-card 6s ease-in-out infinite;
+}
+
+.hero-card-1 {
+    top: 0;
+    left: 0;
+    width: 280px;
+    animation-delay: 0s;
+}
+
+.hero-card-2 {
+    top: 120px;
+    right: 0;
+    width: 300px;
+    animation-delay: 1s;
+}
+
+.hero-card-3 {
+    bottom: 120px;
+    left: 50px;
+    width: 260px;
+    animation-delay: 2s;
+}
+
+.hero-card-4 {
+    bottom: 0;
+    right: 50px;
+    width: 290px;
+    animation-delay: 3s;
+}
+
+@keyframes float-card {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.card-text strong {
+    display: block;
+    font-size: 0.95rem;
+}
+
+.card-text span {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Features Section */
+.features-section {
+    background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--slate-500);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+}
+
+.feature-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.feature-desc {
+    color: var(--slate-500);
+    line-height: 1.6;
+}
+
+/* Benefits Section */
+.benefits-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.benefit-item {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.benefit-number {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+}
+
+.benefit-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.benefit-desc {
+    color: var(--slate-500);
+    line-height: 1.6;
+}
+
+.benefit-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    height: 300px;
+    padding: 2rem;
+}
+
+.chart-bar {
+    flex: 1;
+    background: linear-gradient(180deg, #6366f1, #8b5cf6);
+    border-radius: 12px 12px 0 0;
+    animation: chart-grow 2s ease-out forwards;
+    opacity: 0.8;
+}
+
+@keyframes chart-grow {
+    from { height: 0; }
+}
+
+/* Industries Section */
+.industries-section {
+    background: white;
+}
+
+.industry-card {
+    background: linear-gradient(135deg, #fafafa, #ffffff);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.industry-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.industry-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    margin: 0 auto 1rem;
+}
+
+.industry-name {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.industry-desc {
+    font-size: 0.85rem;
+    color: var(--slate-500);
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.testimonial-card {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    height: 100%;
+}
+
+.testimonial-rating {
+    color: #f59e0b;
+    margin-bottom: 1rem;
+}
+
+.testimonial-text {
+    color: var(--slate-600);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+}
+
+.author-info strong {
+    display: block;
+}
+
+.author-info span {
+    font-size: 0.85rem;
+    color: var(--slate-500);
+}
+
+/* Pricing Section */
+.pricing-section {
+    background: white;
+}
+
+.pricing-card {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.pricing-pro {
+    border: 2px solid #6366f1;
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.2);
+}
+
+.pricing-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.pricing-badge.popular {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.pricing-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.pricing-price {
+    margin-bottom: 2rem;
+}
+
+.price-amount {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--slate-900);
+}
+
+.pricing-pro .price-amount {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.price-period {
+    color: var(--slate-500);
+    font-size: 1rem;
+}
+
+.pricing-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.pricing-features li {
+    padding: 0.75rem 0;
+    color: var(--slate-600);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.pricing-features i {
+    color: #10b981;
+    font-size: 1.2rem;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+}
+
+.cta-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 3rem;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.cta-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Footer */
+.landing-footer {
+    background: var(--slate-900);
+    color: white;
+}
+
+.footer-brand {
+    margin-bottom: 2rem;
+}
+
+.footer-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.footer-desc {
+    color: var(--slate-400);
+    margin-bottom: 1.5rem;
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: rgba(99, 102, 241, 0.5);
+    transform: translateY(-3px);
+}
+
+.footer-heading {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: var(--slate-400);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-divider {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer-copyright,
+.footer-made {
+    color: var(--slate-400);
+    margin: 0;
+}
+
+/* Badge Gradients */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(135deg, #64748b, #475569) !important;
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+}
+
+.bg-gradient-info {
+    background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+}
+
+.shadow-glow {
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4), 0 0 40px rgba(139, 92, 246, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-card-wrapper {
+        height: 400px;
+    }
+    
+    .hero-card {
+        width: 220px !important;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+    }
+    
+    .hero-card-wrapper {
+        display: none;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .cta-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
