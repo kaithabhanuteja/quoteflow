@@ -1,4 +1,5 @@
 import logging
+import os
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, text
 from config import Config, BASE_DIR
@@ -25,13 +26,19 @@ def init_db(app):
             app.config["SQLALCHEMY_DATABASE_URI"] = configured_uri
             app.config["DB_ENGINE_TYPE"] = "MySQL (Production)"
         except Exception as e:
+            if os.getenv("VERCEL") == "1":
+                raise RuntimeError(
+                f"MySQL connection failed on Vercel: {e}") from e
+
             fallback_path = BASE_DIR / "quoteflow.db"
             fallback_uri = f"sqlite:///{fallback_path}"
+
             logger.warning(
-                f"MySQL connection failed ({e}). Gracefully falling back to local SQLite: {fallback_uri}"
+                f"MySQL unavailable. Using local SQLite: {e}"
             )
+
             app.config["SQLALCHEMY_DATABASE_URI"] = fallback_uri
-            app.config["DB_ENGINE_TYPE"] = "SQLite (Local Fallback - configure MySQL in .env)"
+            app.config["DB_ENGINE_TYPE"] = "SQLite (Local Fallback)"
     else:
         app.config["SQLALCHEMY_DATABASE_URI"] = configured_uri
         app.config["DB_ENGINE_TYPE"] = "SQLite (Local Storage)"
